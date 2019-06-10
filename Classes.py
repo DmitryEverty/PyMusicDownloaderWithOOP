@@ -16,6 +16,7 @@ class FrkMusic(MusicSite):
     domen = 'https://www.frkmusic.cc/'
     query = 'genre/english/page/'
     pageUrl = ''
+    trackLinks = []
 
     def __init__(self):
         self.source = 'Frk'
@@ -29,6 +30,14 @@ class FrkMusic(MusicSite):
         return()
 
     def getLinks(self):
+
+        res = requests.get(self.page(1))
+        soup = bs4.BeautifulSoup(res.text, 'lxml')
+        posts = soup.findAll('article')
+        for postlink in posts:
+            link = postlink.find('a').get('href')
+            self.trackLinks.append(link)
+        print(self.trackLinks)
         pass
 
 
