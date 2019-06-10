@@ -19,15 +19,9 @@ class FrkMusic(MusicSite):
     def page(self, pageNumber):
         if isinstance(pageNumber, int):
             self.pageUrl = self.domen + self.query + str(pageNumber)
+            return(self.pageUrl)
         else:
             raise TypeError('Only Numbers Are Allowed')
-
-    def pageCounter(self,):
-        i = 1
-        while i <= 6:
-            self.page(i)
-            print(self.pageUrl)
-            i += 1
 
 
 class Track:
@@ -35,4 +29,5 @@ class Track:
     # Attributes
     artists = ''
     trackName = ''
+    link = ''
     pass

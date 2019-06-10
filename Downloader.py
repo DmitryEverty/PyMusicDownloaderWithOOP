@@ -1,4 +1,5 @@
 import Classes
 
 musicSource = Classes.FrkMusic()
-musicSource.pageCounter()
+a = musicSource.page(3)
+print(a)
