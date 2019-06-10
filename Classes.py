@@ -43,10 +43,6 @@ class FrkMusic(MusicSite):
 
     def readPost(self,):
 
-        trackId = ''
-        parrentLink = ''
-        genre = ''
-        label = ''
         for post in self.postLinks:
             parrentLink = post
             res = requests.get(post)
@@ -57,7 +53,6 @@ class FrkMusic(MusicSite):
                 'span')[1].findAll('span')[1].text
             genre = soup.find_all('h2')[2].findAll(
                 'span')[1].findAll('span')[1].text
-            print(genre)
 
             listGroup = soup.findAll('div', {'class': 'list-group'})
             try:
@@ -74,11 +69,9 @@ class FrkMusic(MusicSite):
                 info = trackInfo.text.split('\n')[0].split(' – ')
                 artists = info[1]
                 trackName = info[0]
-                print(artists)
-                print(trackName)
                 self.createTrack(trackId, artists, trackName,
                                  parrentLink, actualLink, label, genre)
-                pass
+        print(self.trackLibrary)
 
     def createTrack(self, trackId, artists, trackName, parrentLink, actualLink, label, genre):
         self.trackLibrary[trackId] = {
@@ -89,16 +82,4 @@ class FrkMusic(MusicSite):
             'label': label,
             'genre': genre}
 
-        print(self.trackLibrary)
-        pass
-
-
-class Track:
-    def __init__(self,):
-        pass
-    # Attributes
-    artists = ''
-    trackName = ''
-    parrentlink = ''
-    actualLink = ''
-    pass
+        return()
