@@ -30,14 +30,13 @@ class FrkMusic(MusicSite):
         return()
 
     def getLinks(self):
-
+        # Extracting links for each post
         res = requests.get(self.page(1))
         soup = bs4.BeautifulSoup(res.text, 'lxml')
         posts = soup.findAll('article')
         for postlink in posts:
             link = postlink.find('a').get('href')
             self.trackLinks.append(link)
-        print(self.trackLinks)
         pass
 
 
