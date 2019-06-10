@@ -10,7 +10,6 @@ class FrkMusic(MusicSite):
     # Attributes
     domen = 'https://www.frkmusic.cc/'
     query = 'genre/english/page/'
-    firstPage = 1
     pageUrl = ''
 
     def __init__(self):
