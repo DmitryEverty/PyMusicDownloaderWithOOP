@@ -1,3 +1,8 @@
+import requests
+import re
+import bs4
+
+
 class MusicSite:
 
     def __init__(self):  # Frk or EdmFull
@@ -21,6 +26,10 @@ class FrkMusic(MusicSite):
             return(self.pageUrl)
         else:
             raise TypeError('Only Numbers Are Allowed')
+        return()
+
+    def getLinks(self):
+        pass
 
 
 class Track:
