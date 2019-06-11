@@ -40,7 +40,13 @@ class FrkMusic(MusicSite):
         posts = soup.findAll('article')
         for postlink in posts:
             link = postlink.find('a').get('href')
-            self.postLinks.append(link)
+            if link == self.lastTrack:
+                print('Reached the last track')
+                self.isRelevant = False
+                break
+            else:
+                self.postLinks.append(link)
+
         pass
 
     def readOnPagePosts(self,):
