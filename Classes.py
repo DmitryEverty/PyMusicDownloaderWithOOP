@@ -66,13 +66,18 @@ class FrkMusic(MusicSite):
             for trackInfo in trackContainer:
                 # Getting a Single Track's Parrent Link
                 actualLink = trackInfo.get('href')  # Actual link
-                trackId = actualLink.split('/')[-1]  # Id
+                trackId = actualLink.split('/', 3)[-1].replace('/', '-')  # Id
+                print(trackId)
                 info = trackInfo.text.split('\n')[0].split(' – ')
-                artists = info[1]
-                trackName = info[0]
+                if len(info) == 3:
+                    artists = info[2]
+                    trackName = info[1]
+                else:
+                    artists = info[1]
+                    trackName = info[0]
                 self.createTrack(trackId, artists, trackName,
                                  parrentLink, actualLink, label, genre)
-        print(self.trackLibrary)
+        # self.trackIdCheck()
 
     def createTrack(self, trackId, artists, trackName, parrentLink, actualLink, label, genre):
         self.trackLibrary[trackId] = {
@@ -93,5 +98,7 @@ class FrkMusic(MusicSite):
         self.pageNumber += 1
         pass
 
-    def trackIdCheck(self, trackId):
+    def trackIdCheck(self,):
+        for tId in self.trackLibrary:
+            print(tId)
         pass
