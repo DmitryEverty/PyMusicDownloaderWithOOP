@@ -19,6 +19,7 @@ class FrkMusic(MusicSite):
     pageNumber = 1  # Will be changing dynamicaly
     postLinks = []  # Links for every post
     trackLibrary = {}
+    isRelevant = True  # Will be used for While loop
 
     def __init__(self):
         self.source = 'Frk'
@@ -85,6 +86,7 @@ class FrkMusic(MusicSite):
         return()
 
     def pageProcessor(self,):
+
         pass
 
     def nextPage(self,):
