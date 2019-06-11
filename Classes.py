@@ -20,6 +20,7 @@ class FrkMusic(MusicSite):
     postLinks = []  # Links for every post
     trackLibrary = {}
     isRelevant = True  # Will be used for While loop
+    lastTrack = 'https://www.frkmusic.cc/mad-love-mabel-high-expectations-mp3-320kbps-download-free/'
 
     def __init__(self):
         self.source = 'Frk'
@@ -76,7 +77,7 @@ class FrkMusic(MusicSite):
                     trackName = info[0]
                 self.createTrack(trackId, artists, trackName,
                                  parrentLink, actualLink, label, genre)
-        self.trackInfoCheck('parrentLink')
+        print(trackName)
         pass
 
     def createTrack(self, trackId, artists, trackName, parrentLink, actualLink, label, genre):
