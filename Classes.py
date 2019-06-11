@@ -41,7 +41,7 @@ class FrkMusic(MusicSite):
             self.postLinks.append(link)
         pass
 
-    def readPost(self,):
+    def readPosts(self,):
 
         for post in self.postLinks:
             parrentLink = post
