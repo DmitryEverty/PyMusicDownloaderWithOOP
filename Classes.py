@@ -41,7 +41,7 @@ class FrkMusic(MusicSite):
             self.postLinks.append(link)
         pass
 
-    def readPosts(self,):
+    def readOnPagePosts(self,):
 
         for post in self.postLinks:
             parrentLink = post
@@ -83,3 +83,13 @@ class FrkMusic(MusicSite):
             'genre': genre}
 
         return()
+
+    def pageProcessor(self,):
+        pass
+
+    def nextPage(self,):
+        self.pageNumber += 1
+        pass
+
+    def trackIdCheck(self, trackId):
+        pass

@@ -1,5 +1,6 @@
 import Classes
 
 musicSource = Classes.FrkMusic()
+
 musicSource.getLinks()
-musicSource.readPosts()
+musicSource.readOnPagePosts()  # It should return the all new tracks
