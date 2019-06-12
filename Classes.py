@@ -22,8 +22,7 @@ class FrkMusic(MusicSite):
     postLinks = []  # Links for every post
     trackLibrary = {}
     isRelevant = True  # Will be used for While loop
-    # lastTrack = 'https://www.frkmusic.cc/breathe-nytrix-awakend-mp3-320kbps-download-free/'
-    lastTrack = 'https://www.frkmusic.cc/castaways-feat-katty-mcgrew-hasso-mp3-320kbps-download-free/'
+    lastTrack = 'https://www.frkmusic.cc/breathe-nytrix-awakend-mp3-320kbps-download-free/'
 
     def __init__(self):
         self.source = 'Frk'
@@ -110,20 +109,26 @@ class FrkMusic(MusicSite):
 
     def exportDownloadLinks(self,):
         self.gatherPostLinks()
-        print('Collecting Tracks...')
+        print('\n' + 'Collecting Tracks...')
         self.getNewReleases()
+        print('\n' + 'Mr Propper at Work...')
+        self.mrPropper()
+        print('\n' + 'Wait a bit more...')
         mp3files = self.linkConverter()
         self.saveFile(mp3files)
 
     def linkConverter(self,):
         extracted = []
+        n = 1
         for trackLibraryItem in self.trackLibrary:
+            print('Element ' + str(n), end='\r')
             s = requests.session()
             s.headers.update(
                 {'referer': self.trackLibrary[trackLibraryItem]['parrentLink']})
             r = s.get(self.trackLibrary[trackLibraryItem]
                       ['actualLink'], stream=True)
             extracted.append(r.url)
+            n += 1
         return(extracted)
 
     def saveFile(self, mp3s):
@@ -137,6 +142,34 @@ class FrkMusic(MusicSite):
 
     def nextPage(self,):
         self.pageNumber += 1
+        pass
+
+    def mrPropper(self,):
+        badLabels = ['MMXVAC',
+                     'NCS',
+                     'Global Records',
+                     'Circus Records',
+                     'Future Bass Records',
+                     'Thrive Music',
+                     'Enhanced Music',
+                     'Break It Down',
+                     'Magic Records'
+                     'Sirup Music',
+                     'Clout.NU',
+                     'Elysian Records',
+                     'Vibes Records',
+                     'BrednButter',
+                     'UXN Recording',
+                     ]
+        # badGenres = []
+        kicked = []
+        for badLabel in badLabels:
+            for trackId in self.trackLibrary:
+                if badLabel in self.trackLibrary[trackId]['label']:
+                    kicked.append(trackId)
+                    print('Someone was kicked...')
+        for victim in kicked:
+            self.trackLibrary.pop(victim)
         pass
 
     def trackInfoCheck(self, property):
