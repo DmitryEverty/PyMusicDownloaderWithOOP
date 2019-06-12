@@ -22,10 +22,11 @@ class FrkMusic(MusicSite):
     postLinks = []  # Links for every post
     trackLibrary = {}
     isRelevant = True  # Will be used for While loop
-    lastTrack = 'https://www.frkmusic.cc/breathe-nytrix-awakend-mp3-320kbps-download-free/'
+    lastTrack = ''
 
-    def __init__(self):
+    def __init__(self, lastTrack):
         self.source = 'Frk'
+        self.lastTrack = lastTrack
 
     def makePageUrl(self,):
         if isinstance(self.pageNumber, int):

@@ -1,8 +1,6 @@
 import Classes
 
-musicSource = Classes.FrkMusic()
+lastTrack = 'https://www.frkmusic.cc/back-to-you-feat-madeline-lukomski-matt-melody-bvrnout-mp3-320kbps-download-free/'
+musicSource = Classes.FrkMusic(lastTrack)
 
-# links = musicSource.gatherPostLinks()
 musicSource.exportDownloadLinks()
-musicSource.getNewReleases()  # It should return the all new tracks
-print('word')
