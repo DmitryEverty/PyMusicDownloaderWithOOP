@@ -20,12 +20,12 @@ class FrkMusic(MusicSite):
     postLinks = []  # Links for every post
     trackLibrary = {}
     isRelevant = True  # Will be used for While loop
-    lastTrack = 'https://www.frkmusic.cc/mad-love-mabel-high-expectations-mp3-320kbps-download-free/'
+    lastTrack = 'https://www.frkmusic.cc/breathe-nytrix-awakend-mp3-320kbps-download-free/'
 
     def __init__(self):
         self.source = 'Frk'
 
-    def page(self,):
+    def makePageUrl(self,):
         if isinstance(self.pageNumber, int):
             self.pageUrl = self.domen + self.query + str(self.pageNumber)
             return(self.pageUrl)
@@ -35,21 +35,22 @@ class FrkMusic(MusicSite):
 
     def getLinks(self):
         # Extracting links for each post
-        res = requests.get(self.page())
+        res = requests.get(self.makePageUrl())
         soup = bs4.BeautifulSoup(res.text, 'lxml')
         posts = soup.findAll('article')
         for postlink in posts:
             link = postlink.find('a').get('href')
             if link == self.lastTrack:
-                print('Reached the last track')
                 self.isRelevant = False
                 break
             else:
                 self.postLinks.append(link)
+        if self.isRelevant:
+            self.pageNumber += 1
 
         pass
 
-    def readOnPagePosts(self,):
+    def getNewReleases(self,):
 
         for post in self.postLinks:
             parrentLink = post
@@ -83,8 +84,6 @@ class FrkMusic(MusicSite):
                     trackName = info[0]
                 self.createTrack(trackId, artists, trackName,
                                  parrentLink, actualLink, label, genre)
-        print(trackName)
-        pass
 
     def createTrack(self, trackId, artists, trackName, parrentLink, actualLink, label, genre):
         self.trackLibrary[trackId] = {
@@ -97,9 +96,12 @@ class FrkMusic(MusicSite):
 
         return()
 
-    def pageProcessor(self,):
-
-        pass
+    def gatherPostLinks(self,):
+        while self.isRelevant:
+            print('Working On a Page Number ' + str(self.pageNumber), end='\r')
+            self.getLinks()
+        print('Reached the last track' + (' ' * 8))
+        return(self.postLinks)
 
     def nextPage(self,):
         self.pageNumber += 1
