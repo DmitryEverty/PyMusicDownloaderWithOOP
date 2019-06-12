@@ -1,6 +1,8 @@
 import requests
 import re
 import bs4
+import tkinter as tk
+from tkinter import filedialog
 
 
 class MusicSite:
@@ -20,7 +22,8 @@ class FrkMusic(MusicSite):
     postLinks = []  # Links for every post
     trackLibrary = {}
     isRelevant = True  # Will be used for While loop
-    lastTrack = 'https://www.frkmusic.cc/breathe-nytrix-awakend-mp3-320kbps-download-free/'
+    # lastTrack = 'https://www.frkmusic.cc/breathe-nytrix-awakend-mp3-320kbps-download-free/'
+    lastTrack = 'https://www.frkmusic.cc/castaways-feat-katty-mcgrew-hasso-mp3-320kbps-download-free/'
 
     def __init__(self):
         self.source = 'Frk'
@@ -52,7 +55,6 @@ class FrkMusic(MusicSite):
 
     def getNewReleases(self,):
 
-        self.gatherPostLinks()
         for post in self.postLinks:
             parrentLink = post
             res = requests.get(post)
@@ -85,6 +87,7 @@ class FrkMusic(MusicSite):
                     trackName = info[0]
                 self.createTrack(trackId, artists, trackName,
                                  parrentLink, actualLink, label, genre)
+            print(artists + ' - ' + trackName)
 
     def createTrack(self, trackId, artists, trackName, parrentLink, actualLink, label, genre):
         self.trackLibrary[trackId] = {
@@ -104,6 +107,33 @@ class FrkMusic(MusicSite):
         print('Reached the last track ' +
               'At a Page Number ' + str(self.pageNumber))
         # return(self.postLinks)
+
+    def exportDownloadLinks(self,):
+        self.gatherPostLinks()
+        print('Collecting Tracks...')
+        self.getNewReleases()
+        mp3files = self.linkConverter()
+        self.saveFile(mp3files)
+
+    def linkConverter(self,):
+        extracted = []
+        for trackLibraryItem in self.trackLibrary:
+            s = requests.session()
+            s.headers.update(
+                {'referer': self.trackLibrary[trackLibraryItem]['parrentLink']})
+            r = s.get(self.trackLibrary[trackLibraryItem]
+                      ['actualLink'], stream=True)
+            extracted.append(r.url)
+        return(extracted)
+
+    def saveFile(self, mp3s):
+        root = tk.Tk()
+        root.withdraw()
+        file_path = filedialog.askdirectory()
+        with open(file_path + '/Links.txt', 'w') as file:
+            for mp3 in mp3s:
+                file.write(mp3 + '\n')
+        pass
 
     def nextPage(self,):
         self.pageNumber += 1
