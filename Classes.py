@@ -46,12 +46,13 @@ class FrkMusic(MusicSite):
             else:
                 self.postLinks.append(link)
         if self.isRelevant:
-            self.pageNumber += 1
+            self.nextPage()
 
         pass
 
     def getNewReleases(self,):
 
+        self.gatherPostLinks()
         for post in self.postLinks:
             parrentLink = post
             res = requests.get(post)
@@ -100,8 +101,9 @@ class FrkMusic(MusicSite):
         while self.isRelevant:
             print('Working On a Page Number ' + str(self.pageNumber), end='\r')
             self.getLinks()
-        print('Reached the last track' + (' ' * 8))
-        return(self.postLinks)
+        print('Reached the last track ' +
+              'At a Page Number ' + str(self.pageNumber))
+        # return(self.postLinks)
 
     def nextPage(self,):
         self.pageNumber += 1
