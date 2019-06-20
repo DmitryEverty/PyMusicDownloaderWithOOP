@@ -42,6 +42,9 @@ class FrkMusic(MusicSite):
         soup = bs4.BeautifulSoup(res.text, 'lxml')
         posts = soup.findAll('article')
         for postlink in posts:
+            classTags = postlink.attrs['class']
+            if 'tag-upcoming' in classTags:
+                break
             link = postlink.find('a').get('href')
             if link == self.lastTrack:
                 self.isRelevant = False
