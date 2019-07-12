@@ -80,7 +80,11 @@ class FrkMusic(MusicSite):
             for trackInfo in trackContainer:
                 # Getting a Single Track's Parrent Link
                 actualLink = trackInfo.get('href')  # Actual link
-                trackId = actualLink.split('/', 3)[-1].replace('/', '-')  # Id
+                try:
+                    trackId = actualLink.split(
+                        '/', 3)[-1].replace('/', '-')  # Id
+                except:
+                    continue
                 info = trackInfo.text.split('\n')[0].split(' – ')
                 if len(info) == 3:
                     artists = info[2]
