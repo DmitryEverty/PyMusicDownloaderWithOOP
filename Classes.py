@@ -133,8 +133,15 @@ class FrkMusic(MusicSite):
             s = requests.session()
             s.headers.update(
                 {'referer': self.trackLibrary[trackLibraryItem]['parrentLink']})
-            r = s.get(self.trackLibrary[trackLibraryItem]
-                      ['actualLink'], stream=True)
+            try:
+                r = s.get(self.trackLibrary[trackLibraryItem]
+                          ['actualLink'], stream=True)
+            except:
+                insteadOfUrlVar = 'Broken'
+                print('Cant get Stream link. Probably Zip on FileHost.')
+                extracted.append(insteadOfUrlVar)
+                n += 1
+                continue
             extracted.append(r.url)
             n += 1
         return(extracted)
